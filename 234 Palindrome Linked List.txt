@@ -1,0 +1,51 @@
+234. Palindrome Linked List
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public bool IsPalindrome(ListNode head) {
+         if(head == null || head.next == null) return true;
+        
+        /*
+         * Two solutions:
+         * 1. reverse the whole linked list, then compare with the original one. 
+         * 2. Reverse half of the linked list, then compare with another half list;
+        */
+        
+        //find the middle note
+        ListNode slow = head;
+        ListNode fast = head;        
+        while(fast!= null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        //if fast != null, Even/ else odd
+        
+        //reverse the first half part
+        ListNode cur = head;
+        ListNode newHead = null;
+        while(cur != slow){
+            ListNode temp = cur;
+            cur = cur.next;
+            temp.next = newHead;
+            newHead = temp;
+        }
+        
+        // check whether the same
+       cur = (fast != null) ? cur.next : cur;
+       while(newHead!= null && cur != null && newHead.val == cur.val ){
+            newHead = newHead.next;
+            cur = cur.next;
+        }
+
+        if(newHead == null && cur == null) return true;
+        else return false;                
+            
+    }
+}
